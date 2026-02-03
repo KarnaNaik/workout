@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker - 365FIT</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-bolt"></i> 365FIT
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="workouts.html" class="nav-link">Workouts</a></li>
+                <li><a href="tracker.html" class="nav-link active">Tracker</a></li>
+                <li><a href="profile.html" class="nav-link">Profile</a></li>
+                <li><button id="themeToggle" class="theme-btn"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <!-- Streak Section -->
+        <section class="streak-section">
+            <div class="streak-card">
+                <h2>Current Streak</h2>
+                <div class="streak-number" id="streakCount">0</div>
+                <p>Days in a row</p>
+            </div>
+            <div class="streak-card">
+                <h2>Total Completed</h2>
+                <div class="streak-number" id="totalCompleted">0</div>
+                <p>Days out of 365</p>
+            </div>
+            <div class="streak-card">
+                <h2>Progress</h2>
+                <div class="progress-circle">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <span id="progressPercent">0%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Water Tracker -->
+        <section class="water-section">
+            <div class="water-card">
+                <h2><i class="fas fa-tint"></i> Water Intake</h2>
+                <p>Daily Goal: 8 glasses (2L)</p>
+                <div class="water-controls">
+                    <button id="removeWater" class="btn-icon small"><i class="fas fa-minus"></i></button>
+                    <div class="water-count"><span id="waterCount">0</span>/8</div>
+                    <button id="addWater" class="btn-icon small"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="water-visual" id="waterVisual"></div>
+                <div class="water-history">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; opacity: 0.8;">Weekly Hydration</h3>
+                    <div id="waterHistoryChart" class="water-chart"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Tracker -->
+        <section class="calendar-section">
+            <h2>365 Day Calendar Tracker</h2>
+            <div class="month-selector">
+                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                <span id="monthYear"></span>
+                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </section>
+
+        <!-- Workout Log -->
+        <section class="workout-log-section">
+            <h2>Recent Activity</h2>
+            <div class="log-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="today">Today</button>
+                <button class="filter-btn" data-filter="week">This Week</button>
+                <button class="filter-btn" data-filter="month">This Month</button>
+            </div>
+            <div class="workout-log" id="workoutLog"></div>
+        </section>
+    </main>
+    <script src="../js/tracker.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

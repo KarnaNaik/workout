@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>365 Fit - Transform Your Body, Transform Your Life</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-bolt">fit</i> 
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="pages/workouts.html" class="nav-link">Workouts</a></li>
+                <li><a href="pages/tracker.html" class="nav-link">Tracker</a></li>
+                <li><a href="pages/profile.html" class="nav-link">Profile</a></li>
+                <li><button id="themeToggle" class="theme-btn"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Transform in 365 Days</h1>
+                <p>No Equipment. Just You. Unlimited Potential.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="redirectTo('pages/workouts.html')">Start Now</button>
+                    <button class="btn btn-secondary" onclick="redirectTo('pages/profile.html')">Create Profile</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-placeholder">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="goals">
+            <h2>Choose Your Goal</h2>
+            <div class="goals-grid">
+                <div class="goal-card" onclick="setGoal('height')">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>Increase Height</h3>
+                    <p>Stretching & Posture</p>
+                </div>
+                <div class="goal-card" onclick="setGoal('fitness')">
+                    <i class="fas fa-heart"></i>
+                    <h3>Overall Fitness</h3>
+                    <p>Build Strength & Endurance</p>
+                </div>
+                <div class="goal-card" onclick="setGoal('fatloss')">
+                    <i class="fas fa-fire"></i>
+                    <h3>Fat Loss</h3>
+                    <p>Cardio & Core Training</p>
+                </div>
+                <div class="goal-card" onclick="setGoal('posture')">
+                    <i class="fas fa-person"></i>
+                    <h3>Posture Adjustment</h3>
+                    <p>Spine Alignment & Balance</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Why Choose 365FIT?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>365 Day Tracker</h3>
+                    <p>Track your progress every single day with manual marking and streak counter.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-stopwatch"></i>
+                    <h3>Smart Timer</h3>
+                    <p>Customizable timers for each exercise with rest periods included.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-images"></i>
+                    <h3>Visual Guides</h3>
+                    <p>Reference images & GIFs for proper form and technique.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Performance Stats</h3>
+                    <p>BMI calculation, weight tracking, and progress analytics.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-moon"></i>
+                    <h3>Dark Mode</h3>
+                    <p>Easy on the eyes with modern dark theme interface.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Ready</h3>
+                    <p>Perfect for phones, tablets, laptops and all devices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats">
+            <div class="stat-item">
+                <h3>1000+</h3>
+                <p>Users Transformed</p>
+            </div>
+            <div class="stat-item">
+                <h3>365</h3>
+                <p>Days of Tracking</p>
+            </div>
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Exercises Available</p>
+            </div>
+            <div class="stat-item">
+                <h3>4</h3>
+                <p>Goal Categories</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Start Your 365 Day Journey?</h2>
+            <p>Join thousands of people transforming their bodies and lives</p>
+            <button class="btn btn-primary btn-large" onclick="redirectTo('pages/profile.html')">Get Started Today</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>No Equipment. Pure Dedication.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
