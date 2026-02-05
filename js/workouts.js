@@ -175,6 +175,16 @@ const exercisesDB = {
             guide: 'Keep lower back glued to floor.'
         },
         {
+    "id": "core-01",
+    "name": "Hollow Body Hold",
+    "image": "https://tse1.mm.bing.net/th/id/OIP.uKzBrsrZBUR0FWDtcJkKOwHaEL?cb=defcachec2&rs=1&pid=ImgDetMain&o=7&rm=3",
+    "sets": 3,
+    "duration": "30-45 seconds",
+    "difficulty": "Medium",
+    "description": "Lie on your back with arms overhead and legs straight. Simultaneously lift your legs, shoulders, and head off the ground to create a 'banana' shape.",
+    "guide": "Press your lower back firmly into the floor; there should be no gap between your spine and the mat."
+},
+        {
             id: 'core-02',
             name: 'Plank',
             image: 'https://media1.popsugar-assets.com/files/thumbor/t-fnO56wy5NOqwgWF8IoYaj3Fyo/fit-in/1024x1024/filters:format_auto-!!-:strip_icc-!!-/2020/06/29/850/n/1922729/aab79a83ede59788_IMB_2EOscO/i/Plank.GIF',
@@ -206,7 +216,40 @@ const exercisesDB = {
             difficulty: 'Easy',
             description: 'Lift knees high while standing.',
             guide: 'Controlled movement.'
-        }
+        },
+        {
+            id: 'wall-01',
+            name: 'Straight Wall Touch',
+            image: 'https://i.pinimg.com/originals/a4/87/49/a487496bb775fbf575787df765fcf47d.gif',
+            sets: 4,
+            reps: '25 reps',
+            duration: 60,
+            difficulty: 'Medium',
+            description: 'Lie on back, feet on wall (90°). Lift head/shoulders, reach hands to wall.',
+            guide: 'Focus on controlled crunch. Keep lower back pressed.'
+        },
+        {
+            id: 'wall-02',
+            name: 'Alt. Wall Touch',
+            image: 'https://liftmanual.com/wp-content/uploads/2023/04/alternate-heel-touchers.jpg',
+            sets: 3,
+            reps: '50 each side',
+            duration: 120,
+            difficulty: 'Hard',
+            description: 'Reach one hand at a time towards the wall, alternating sides.',
+            guide: 'Targets obliques. Exhale on reach.'
+        },
+        {
+            id: 'wall-03',
+            name: 'Wall Cross Crunch',
+            image: 'https://www.icegif.com/wp-content/uploads/2022/08/icegif-111.gif',
+            sets: 3,
+            reps: '50 each side',
+            duration: 120,
+            difficulty: 'Hard',
+            description: 'Hands behind head, bring opposite elbow towards opposite knee.',
+            guide: 'Twisting motion for side muscles.'
+        },
     ],
     posture: [
         {
@@ -381,7 +424,7 @@ const exercisesDB = {
         {
             id: 'cool-04',
             name: 'Deep Nasal Breathing',
-            image: 'https://giphy.com/gifs/yogateacherscollege-lucas-rockwood-breathing-exercise-yoga-whVGEJ7ieEU41Hx7q0',
+            image: 'https://i0.wp.com/post.healthline.com/wp-content/uploads/2022/11/400x400_Breathing_Techniques_For_Stress_Relief_and_More_Cooling_Breath.gif?w=1155&h=840',
             sets: 1,
             reps: '1 min',
             duration: 60,
@@ -404,6 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupExerciseModal();
     setupSessionControls();
     setupLightbox();
+    setupSearch();
 });
 
 // ============================================
@@ -411,16 +455,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 async function renderWorkouts() {
-    // Simulate API loading state
-    const containers = ['height', 'fitness', 'fatloss', 'posture', 'cooldown', 'playlists'];
-    containers.forEach(cat => {
-        const el = document.getElementById(`${cat}Workouts`);
-        if (el) el.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin fa-2x" style="color: var(--primary-color)"></i></div>';
-    });
-
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     Object.keys(exercisesDB).forEach(category => {
         const container = document.getElementById(`${category}Workouts`);
         if (container) {
@@ -434,100 +468,107 @@ async function renderWorkouts() {
 }
 
 function setupSessionControls() {
-    const tabSection = document.querySelector('.tab-section');
-    if (!tabSection) return;
-    if (tabSection) {
-        const existingContainer = document.getElementById('sessionControlsContainer');
-        if (existingContainer) existingContainer.remove();
-        const existingBtn = document.getElementById('startSessionBtn');
-        if (existingBtn) existingBtn.remove();
+    const container = document.getElementById('contextualSessionBtnContainer');
+    if (!container) return;
 
-        const container = document.createElement('div');
-        container.id = 'sessionControlsContainer';
-        container.style.display = 'flex';
-        container.style.flexDirection = 'column';
-        container.style.alignItems = 'center';
-        container.style.gap = '1rem';
-        container.style.margin = '2rem auto';
-        container.style.maxWidth = '500px';
-        container.style.padding = '0 1rem';
+    // Clear container and setup layout
+    container.innerHTML = '';
+    container.style.display = 'flex';
+    container.style.gap = '0.5rem';
+    container.style.flexWrap = 'wrap';
 
-        // Select Dropdown
-        const select = document.createElement('select');
-        select.id = 'sessionSelect';
-        select.style.padding = '0.8rem';
-        select.style.borderRadius = '8px';
-        select.style.border = '1px solid var(--border-color)';
-        select.style.backgroundColor = 'var(--card-light)';
-        select.style.color = 'var(--light-text)';
-        select.style.width = '100%';
-        select.style.fontSize = '1rem';
-        select.style.cursor = 'pointer';
+    // 1. Contextual Button
+    const btn = document.createElement('button');
+    btn.id = 'contextualStartBtn';
+    btn.className = 'btn btn-primary btn-large';
+    btn.style.flex = '1';
+    btn.style.minWidth = '200px';
+    btn.style.display = 'flex';
+    btn.style.justifyContent = 'center';
+    btn.style.alignItems = 'center';
+    btn.style.gap = '0.5rem';
+    container.appendChild(btn);
 
+    // 2. Full Session Button
+    const fullBtn = document.createElement('button');
+    fullBtn.id = 'fullSessionBtn';
+    fullBtn.className = 'btn btn-secondary btn-large';
+    fullBtn.style.flex = '1';
+    fullBtn.style.minWidth = '200px';
+    fullBtn.style.display = 'flex';
+    fullBtn.style.justifyContent = 'center';
+    fullBtn.style.alignItems = 'center';
+    fullBtn.style.gap = '0.5rem';
+    fullBtn.innerHTML = '<i class="fas fa-fire"></i> Full Session';
+    fullBtn.onclick = () => startGuidedSession('full');
+    container.appendChild(fullBtn);
+
+    // Function to update button state
+    const updateButton = (tabId) => {
         const displayNames = {
             height: 'Morning Routine',
             fitness: 'Strength Training',
             fatloss: 'Core & Abs',
             posture: 'Posture Correction',
             warmup: 'Warmup',
-            cooldown: 'Cooldown & Yoga'
+            cooldown: 'Cooldown & Yoga',
+            playlists: 'My Playlists'
         };
 
-        const playlists = window.appUtils.getPlaylists();
+        const name = displayNames[tabId] || 'Session';
+        
+        if (tabId === 'playlists') {
+            btn.innerHTML = `<i class="fas fa-list"></i> Manage Playlists`;
+            btn.onclick = () => document.getElementById('playlistsContainer').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            btn.innerHTML = `<i class="fas fa-play"></i> Start ${name}`;
+            btn.onclick = () => startGuidedSession(tabId);
+        }
+    };
 
-        const options = [
-            { value: 'current', text: '▶ Start Current Category' },
-            { value: 'full', text: '🔥 Full Session ' },
-            { value: 'sunday', text: '🧘 Sunday Session (Posture + Yoga)' },
-            ...Object.keys(exercisesDB).map(k => ({ 
-                value: k, 
-                text: displayNames[k] || k.charAt(0).toUpperCase() + k.slice(1) 
-            })),
-            ...playlists.map(p => ({
-                value: `playlist_${p.name}`, text: `🎵 ${p.name}`
-            }))
-        ];
-
-        options.forEach(opt => {
-            const option = document.createElement('option');
-            option.value = opt.value;
-            option.textContent = opt.text;
-            select.appendChild(option);
+    // Listen for tab clicks
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            updateButton(e.currentTarget.dataset.tab);
         });
+    });
 
-        // Start Button
-        const sessionBtn = document.createElement('button');
-        sessionBtn.id = 'startSessionBtn';
-        sessionBtn.className = 'btn btn-primary btn-large';
-        sessionBtn.style.width = '100%';
-        sessionBtn.innerHTML = '<i class="fas fa-play"></i> GO!';
-        sessionBtn.onclick = () => {
-            const selected = select.value;
-            if (selected === 'current') {
-                const activeTab = document.querySelector('.tab-pane.active');
-                if (activeTab) {
-                    startGuidedSession(activeTab.id);
-                } else {
-                    showNotification('Please select a category tab first.', 'warning');
-                }
+    // Initialize with active tab (default: height)
+    const activeTab = document.querySelector('.tab-btn.active');
+    updateButton(activeTab ? activeTab.dataset.tab : 'height');
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById('exerciseSearch');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const cards = document.querySelectorAll('.workout-card');
+        
+        cards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            if (title.includes(term)) {
+                card.style.display = 'flex';
             } else {
-                startGuidedSession(selected);
+                card.style.display = 'none';
             }
-        };
-        
-        container.appendChild(select);
-        container.appendChild(sessionBtn);
-        
-        // Insert after tabs
-        tabSection.parentNode.insertBefore(container, tabSection.nextSibling);
-    }
+        });
+    });
 }
 
 function createWorkoutCard(exercise) {
+    // Difficulty Badge Color Logic
+    let badgeColor = '#26de81'; // Easy (Green)
+    if (exercise.difficulty.toLowerCase().includes('medium')) badgeColor = '#fed330'; // Yellow
+    if (exercise.difficulty.toLowerCase().includes('hard')) badgeColor = '#ff6b6b'; // Red
+
     const card = document.createElement('div');
     card.className = 'workout-card';
     card.innerHTML = `
         <div class="workout-image">
+            <span class="difficulty-badge" style="background-color: ${badgeColor}">${exercise.difficulty}</span>
             <button class="add-to-playlist-btn" title="Add to playlist"><i class="fas fa-plus"></i></button>
             ${exercise.image ? `<img src="${exercise.image}" alt="${exercise.name}" style="width:100%; height:100%; object-fit:cover;">` : `<i class="fas fa-dumbbell" style="font-size: 2rem; color: var(--secondary-color);"></i>`}
         </div>
@@ -535,7 +576,7 @@ function createWorkoutCard(exercise) {
             <h3>${exercise.name}</h3>
             <div class="workout-meta">
                 <span><i class="fas fa-repeat"></i> ${exercise.sets} sets</span>
-                <span class="difficulty">${exercise.difficulty}</span>
+                <span><i class="fas fa-clock"></i> ${exercise.duration}s</span>
             </div>
             <p>${exercise.reps}</p>
         </div>
@@ -740,26 +781,35 @@ function updateTimerDisplay() {
 }
 
 function playTimerCompleteSound() {
+    // Vibration effect for mobile devices
+    if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 500]);
+    }
+
     try {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         if (!AudioContext) return;
         
         const ctx = new AudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
-        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.5); // Drop to A4
-        
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.5);
-        
-        osc.start();
-        osc.stop(ctx.currentTime + 0.5);
+
+        // Play a pleasant success chime (Major Triad: C5, E5, G5)
+        const playNote = (freq, startTime, duration) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.8, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+        };
+
+        const now = ctx.currentTime;
+        playNote(523.25, now, 1.0);       // C5
+        playNote(659.25, now + 0.2, 1.0); // E5
+        playNote(783.99, now + 0.4, 2.5); // G5
     } catch (e) {
         console.error("Audio play failed", e);
     }

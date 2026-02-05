@@ -3,16 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workouts - 365FIT</title>
+    <title>FIT</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Search & Controls Section */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            background: var(--card-light, #fff);
+            color: var(--text-main, #333);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-color, #ff6b6b);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.15);
+        }
+
+        /* Difficulty Badges */
+        .workout-image {
+            position: relative;
+        }
+
+        .difficulty-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* Responsive Adjustments */
+        @media (min-width: 768px) {
+            .controls-section {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .search-wrapper {
+                max-width: 400px;
+            }
+            #contextualSessionBtnContainer {
+                flex: 0 0 auto;
+            
+
+        /* Dark Mode Overrides */
+        body.dark-mode .search-wrapper input {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+        
+        /* Fix for Search Toggle Display */
+        .workout-card {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <i class="fas fa-bolt"></i> 365FIT
+                <i class="fas fa-bolt"></i> FIT
             </div>
             <ul class="nav-menu">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
@@ -37,6 +126,9 @@
                 <button class="tab-btn active" data-tab="height">
                     <i class="fas fa-sun"></i> Morning
                 </button>
+                <button class="tab-btn" data-tab="warmup">
+                    <i class="fas fa-running"></i> Warmup
+                </button>
                 <button class="tab-btn" data-tab="fitness">
                     <i class="fas fa-dumbbell"></i> Strength
                 </button>
@@ -46,10 +138,22 @@
                 <button class="tab-btn" data-tab="posture">
                     <i class="fas fa-user-check"></i> Posture
                 </button>
+                <button class="tab-btn" data-tab="cooldown">
+                    <i class="fas fa-snowflake"></i> Cooldown
+                </button>
                 <button class="tab-btn" data-tab="playlists">
                     <i class="fas fa-list"></i> My Playlists
                 </button>
             </div>
+        </section>
+
+        <!-- Controls & Search Section -->
+        <section class="controls-section">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="exerciseSearch" placeholder="Search exercises...">
+            </div>
+            <div id="contextualSessionBtnContainer"></div>
         </section>
 
         <!-- Tab Content -->
@@ -58,6 +162,12 @@
             <div id="height" class="tab-pane active">
                 <h2>Morning Routine </h2>
                 <div class="workouts-grid" id="heightWorkouts"></div>
+            </div>
+
+            <!-- Warmup Tab -->
+            <div id="warmup" class="tab-pane">
+                <h2>Warmup Routine</h2>
+                <div class="workouts-grid" id="warmupWorkouts"></div>
             </div>
 
             <!-- Fitness Tab -->
@@ -78,6 +188,12 @@
                 <div class="workouts-grid" id="postureWorkouts"></div>
             </div>
 
+            <!-- Cooldown Tab -->
+            <div id="cooldown" class="tab-pane">
+                <h2>Cool Down Routine</h2>
+                <div class="workouts-grid" id="cooldownWorkouts"></div>
+            </div>
+
             <!-- Playlists Tab -->
             <div id="playlists" class="tab-pane">
                 <h2>My Custom Playlists</h2>
@@ -85,17 +201,6 @@
             </div>
         </section>
     </main>
-    <div id="cooldown" class="tab-pane">
-        <div class="category-header">
-            <h2>Cool Down Routine</h2>
-            <p>Essential stretches to lower heart rate and improve recovery.</p>
-        </div>
-        <!-- The ID 'cooldownWorkouts' matches the key in your exercisesDB -->
-        <div class="workouts-grid" id="cooldownWorkouts">
-            <!-- JavaScript will automatically inject the cards here -->
-        </div>
-    </div>
-    
 
     <!-- Modal for Exercise Details -->
     <div id="exerciseModal" class="modal">
@@ -160,7 +265,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2026 365FIT. All rights reserved.</p>
+        <p></p>
     </footer>
 
     <script src="../js/workouts.js"></script>

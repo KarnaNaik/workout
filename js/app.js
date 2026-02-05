@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTabs();
     loadUserData();
     setupGlobalTimer();
-    checkAuth();
     setupWaterTracker();
 });
 
@@ -117,7 +116,6 @@ function loadUserData() {
     const user = getUserData();
     if (user) {
         console.log('User loaded:', user);
-        updateAuthUI(true);
     }
 }
 
@@ -304,66 +302,6 @@ function setupGlobalTimer() {
 
     // Initial load
     updateState();
-}
-
-// ============================================
-// AUTHENTICATION (Simulated)
-// ============================================
-
-function checkAuth() {
-    const user = getUserData();
-    if (!user) {
-        showAuthModal();
-    } else {
-        updateAuthUI(true);
-    }
-}
-
-function showAuthModal() {
-    if (document.querySelector('.auth-modal')) return;
-
-    const modal = document.createElement('div');
-    modal.className = 'auth-modal';
-    modal.innerHTML = `
-        <div class="auth-content">
-            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Welcome to 365FIT</h2>
-            <p style="margin-bottom: 2rem; opacity: 0.7;">Please sign in to continue your journey.</p>
-            <form id="authForm">
-                <div class="form-group">
-                    <input type="text" id="authName" placeholder="Enter your name" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Start Journey</button>
-            </form>
-        </div>
-    `;
-    document.body.appendChild(modal);
-
-    document.getElementById('authForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('authName').value;
-        if (name) {
-            const user = { fullName: name, joined: new Date().toISOString() };
-            setUserData(user);
-            modal.remove();
-            showNotification(`Welcome back, ${name}!`, 'success');
-            updateAuthUI(true);
-        }
-    });
-}
-
-function updateAuthUI(isLoggedIn) {
-    // Add logout button if not exists
-    const navMenu = document.querySelector('.nav-menu');
-    if (isLoggedIn && navMenu && !document.getElementById('logoutBtn')) {
-        const li = document.createElement('li');
-        li.innerHTML = `<button id="logoutBtn" class="btn" style="background:transparent; color:var(--danger-color); padding: 0.5rem;"><i class="fas fa-sign-out-alt"></i></button>`;
-        navMenu.appendChild(li);
-        
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            localStorage.removeItem('userData');
-            window.location.reload();
-        });
-    }
 }
 
 // ============================================
